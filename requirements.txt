@@ -1,11 +1,14 @@
 # Base requirements with stable versions
+--only-binary=:all:
 Flask==2.3.3
 Pillow==9.5.0
 numpy==1.24.3
-ISR==2.2.0
-Werkzeug==2.3.7
 h5py==3.8.0
+Werkzeug==2.3.7
 flask-limiter==3.3.1
 flask-wtf==1.1.1
 python-dotenv==1.0.0
 gunicorn==21.2.0
+
+# Install ISR last as it has dependencies on the above packages
+ISR==2.2.0
