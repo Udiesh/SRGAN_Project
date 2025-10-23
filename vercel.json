@@ -1,16 +1,5 @@
 {
-    "buildCommand": "pip install -r requirements.txt",
-    "framework": "python",
-    "builds": [
-        {
-            "src": "wsgi.py",
-            "use": "@vercel/python"
-        }
-    ],
-    "routes": [
-        {
-            "src": "/(.*)",
-            "dest": "/wsgi.py"
-        }
+    "rewrites": [
+        { "source": "/(.*)", "destination": "/api/index" }
     ]
 }
