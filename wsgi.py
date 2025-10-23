@@ -1,21 +1,11 @@
 """WSGI entry point."""
-import os
-import sys
+from flask import Flask
 
-# Add the app directory to the Python path
-sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+app = Flask(__name__)
 
-try:
-    from app import create_app
-    app = create_app('production')
-except Exception as e:
-    from flask import Flask, jsonify
-    app = Flask(__name__)
-    
-    @app.route('/')
-    def error():
-        return jsonify({
-            'status': 'error',
-            'message': 'Application failed to start',
-            'error': str(e)
-        }), 500
+@app.route('/')
+def home():
+    return 'SRGAN Project - Initial Deployment Test'
+
+if __name__ == '__main__':
+    app.run()
