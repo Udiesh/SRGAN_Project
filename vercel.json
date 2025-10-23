@@ -3,10 +3,18 @@
     "builds": [
         {
             "src": "wsgi.py",
-            "use": "@vercel/python"
+            "use": "@vercel/python",
+            "config": {
+                "runtime": "python3.9",
+                "maxLambdaSize": "15mb"
+            }
         }
     ],
     "routes": [
+        {
+            "src": "/static/(.*)",
+            "dest": "/static/$1"
+        },
         {
             "src": "/(.*)",
             "dest": "wsgi.py"
@@ -14,6 +22,7 @@
     ],
     "env": {
         "FLASK_ENV": "production",
-        "FLASK_APP": "app"
+        "FLASK_APP": "app",
+        "PYTHONPATH": "."
     }
 }
