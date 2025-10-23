@@ -38,3 +38,4 @@ weights/
 # Test coverage
 .coverage
 htmlcov/
+.vercel
