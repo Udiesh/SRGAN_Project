@@ -1,0 +1,11 @@
+{
+    "projectId": "prj_srgan_api",
+    "orgId": "team_srgan",
+    "settings": {
+        "framework": "other",
+        "buildCommand": null,
+        "outputDirectory": null,
+        "installCommand": null,
+        "devCommand": null
+    }
+}
