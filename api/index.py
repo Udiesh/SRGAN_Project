@@ -5,6 +5,7 @@ import os
 import io
 import uuid
 import time
+from ml_handler import ml_handler
 
 app = Flask(__name__)
 CORS(app)
@@ -12,6 +13,9 @@ CORS(app)
 # Configure upload settings
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
 MAX_CONTENT_LENGTH = 16 * 1024 * 1024  # 16MB max file size
+
+# Initialize ML model
+ml_handler.initialize()
 
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
@@ -37,8 +41,9 @@ def status():
         'version': '1.0.0',
         'features': {
             'image_upload': True,
-            'image_processing': False,  # Will be True when ML is added
-            'super_resolution': False   # Will be True when SRGAN is added
+            'image_processing': True,
+            'super_resolution': True,
+            'model_initialized': ml_handler.initialized
         }
     })
 
@@ -73,25 +78,36 @@ def upscale():
             img = img.convert('RGB')
         
         # Get original dimensions
-        width, height = img.size
+        orig_width, orig_height = img.size
         
-        # For now, just return the original image with metadata
-        # Later, this is where we'll add the SRGAN processing
+        # Process image through SRGAN
+        start_time = time.time()
+        sr_img = ml_handler.process_image(img)
+        process_time = time.time() - start_time
+        
+        # Get enhanced dimensions
+        new_width, new_height = sr_img.size
+        
+        # Convert to bytes for response
         img_byte_arr = io.BytesIO()
-        img.save(img_byte_arr, format='PNG')
+        sr_img.save(img_byte_arr, format='PNG')
         img_byte_arr.seek(0)
         
-        return jsonify({
-            'status': 'success',
-            'message': 'Image processed successfully',
-            'metadata': {
-                'original_width': width,
-                'original_height': height,
-                'format': img.format,
-                'mode': img.mode
-            },
-            'note': 'ML processing will be added in the next update'
-        })
+        # Send the processed image
+        return send_file(
+            img_byte_arr,
+            mimetype='image/png',
+            as_attachment=True,
+            download_name='enhanced.png',
+            headers={
+                'X-Original-Width': str(orig_width),
+                'X-Original-Height': str(orig_height),
+                'X-Enhanced-Width': str(new_width),
+                'X-Enhanced-Height': str(new_height),
+                'X-Process-Time': str(round(process_time, 2)),
+                'X-Enhancement-Factor': str(new_width / orig_width)
+            }
+        )
         
     except Exception as e:
         return jsonify({
