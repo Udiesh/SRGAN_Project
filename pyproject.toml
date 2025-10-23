@@ -1,0 +1,9 @@
+[build-system]
+requires = ["setuptools>=59.6.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "srgan-webapp"
+version = "1.0.0"
+description = "SRGAN Web Application"
+requires-python = ">=3.9,<3.10"
