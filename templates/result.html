@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>OptimizedSRGAN - Enhanced Result</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <style>
+      :root {
+        --primary: #4361ee;
+        --secondary: #3f37c9;
+        --success: #4cc9f0;
+        --light: #f8f9fa;
+        --dark: #212529;
+        --accent: #4895ef;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #f5f7fa 0%, #e4e9f2 100%);
+        padding: 30px 0;
+        min-height: 100vh;
+      }
+
+      .container {
+        max-width: 1200px;
+      }
+
+      .logo-container {
+        margin-bottom: 2.5rem;
+        position: relative;
+      }
+
+      .logo {
+        font-weight: 800;
+        font-size: 2.5rem;
+        background: linear-gradient(to right, var(--primary), var(--success));
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        margin-bottom: 0;
+        letter-spacing: -1px;
+      }
+
+      .subtitle {
+        color: #6c757d;
+        margin-bottom: 0.5rem;
+        font-weight: 500;
+      }
+
+      .tech-badge {
+        display: inline-block;
+        padding: 0.35rem 0.7rem;
+        font-size: 0.75rem;
+        font-weight: 600;
+        border-radius: 50px;
+        margin-right: 0.5rem;
+        margin-bottom: 0.5rem;
+        background-color: rgba(67, 97, 238, 0.15);
+        color: var(--primary);
+        border: 1px solid rgba(67, 97, 238, 0.3);
+      }
+
+      .card {
+        border: none;
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        overflow: hidden;
+        margin-bottom: 25px;
+        backdrop-filter: blur(5px);
+        background-color: rgba(255, 255, 255, 0.9);
+      }
+
+      .card-header {
+        background-color: rgba(255, 255, 255, 0.8);
+        border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        padding: 1.25rem 1.5rem;
+      }
+
+      .card-title {
+        margin-bottom: 0;
+        font-weight: 600;
+        font-size: 1.25rem;
+        color: var(--dark);
+      }
+
+      .card-body {
+        padding: 1.75rem;
+      }
+
+      .img-container {
+        position: relative;
+        margin-bottom: 1.5rem;
+        transition: all 0.3s ease;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      .img-container:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+      }
+
+      .img-container img {
+        width: 100%;
+        border-radius: 10px;
+        display: block;
+      }
+
+      .img-label {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background: rgba(0, 0, 0, 0.7);
+        color: white;
+        padding: 5px 10px;
+        border-radius: 20px;
+        font-size: 0.75rem;
+        font-weight: 600;
+      }
+
+      .img-stats {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: rgba(0, 0, 0, 0.7);
+        color: white;
+        padding: 8px 12px;
+        font-size: 0.8rem;
+        font-weight: 500;
+        display: flex;
+        justify-content: space-between;
+      }
+
+      .btn-download {
+        background: linear-gradient(to right, var(--primary), var(--accent));
+        color: white;
+        border: none;
+        border-radius: 10px;
+        padding: 0.75rem 1.5rem;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 10px rgba(67, 97, 238, 0.3);
+        margin-right: 10px;
+      }
+
+      .btn-download:hover {
+        background: linear-gradient(to right, var(--secondary), var(--primary));
+        transform: translateY(-2px);
+        box-shadow: 0 6px 15px rgba(67, 97, 238, 0.4);
+      }
+
+      .btn-another {
+        background-color: #f8fafc;
+        color: var(--primary);
+        border: 1px solid #e2e8f0;
+        border-radius: 10px;
+        padding: 0.75rem 1.5rem;
+        font-weight: 500;
+        transition: all 0.3s ease;
+      }
+
+      .btn-another:hover {
+        background-color: var(--primary);
+        color: white;
+        box-shadow: 0 4px 10px rgba(67, 97, 238, 0.3);
+      }
+
+      .footer {
+        color: #94a3b8;
+        font-size: 0.85rem;
+        text-align: center;
+        margin-top: 1.5rem;
+        font-weight: 500;
+      }
+
+      @keyframes pulse {
+        0% {
+          box-shadow: 0 0 0 0 rgba(67, 97, 238, 0.4);
+        }
+        70% {
+          box-shadow: 0 0 0 10px rgba(67, 97, 238, 0);
+        }
+        100% {
+          box-shadow: 0 0 0 0 rgba(67, 97, 238, 0);
+        }
+      }
+
+      .animate-pulse {
+        animation: pulse 2s infinite;
+      }
+
+      .enhancement-stats {
+        background-color: #f8fafc;
+        border-radius: 10px;
+        padding: 1.25rem;
+        margin-bottom: 1.5rem;
+        border: 1px solid #e2e8f0;
+      }
+
+      .stat-item {
+        display: flex;
+        align-items: center;
+        margin-bottom: 0.75rem;
+      }
+
+      .stat-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background-color: rgba(67, 97, 238, 0.15);
+        color: var(--primary);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 1rem;
+        font-size: 1.1rem;
+      }
+
+      .stat-label {
+        font-weight: 600;
+        color: #64748b;
+        font-size: 0.85rem;
+        margin-bottom: 0.25rem;
+      }
+
+      .stat-value {
+        font-weight: 700;
+        color: var(--dark);
+        font-size: 1.1rem;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="text-center logo-container">
+        <h1 class="logo">OptimizedSRGAN</h1>
+        <p class="subtitle">Advanced Image Super Resolution</p>
+
+        <div class="d-flex justify-content-center mt-3 flex-wrap">
+          <span class="tech-badge"
+            ><i class="fas fa-brain me-1"></i> SRGAN</span
+          >
+          <span class="tech-badge"
+            ><i class="fas fa-image me-1"></i> 4x Upscaling</span
+          >
+          <span class="tech-badge"
+            ><i class="fas fa-cogs me-1"></i> GAN Architecture</span
+          >
+          <span class="tech-badge"
+            ><i class="fas fa-bolt me-1"></i> Optimized Training</span
+          >
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <h5 class="card-title">
+            <i class="fas fa-check-circle me-2 text-success"></i>Enhancement
+            Complete
+          </h5>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="img-container">
+                <img src="{{ original }}" alt="Original Image" />
+                <div class="img-label">Original</div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="img-container">
+                <img src="{{ result }}" alt="Enhanced Image" />
+                <div class="img-label">Enhanced</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="d-flex justify-content-center mt-4">
+            <a
+              href="{{ result }}"
+              download
+              class="btn btn-download animate-pulse"
+            >
+              <i class="fas fa-download me-2"></i>Download Enhanced Image
+            </a>
+            <a href="/" class="btn btn-another">
+              <i class="fas fa-redo me-2"></i>Process Another Image
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer">
+        <p>Final Year Project | Computer Vision & Image Processing</p>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>

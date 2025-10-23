@@ -1,0 +1,10 @@
+# Base requirements
+Flask==2.3.3
+Pillow==10.0.1
+numpy==1.24.3
+ISR==2.2.0
+Werkzeug==2.3.7
+h5py==2.10.0
+flask-limiter==3.3.1
+flask-wtf==1.1.1
+python-dotenv==1.0.0

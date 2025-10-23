@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>OptimizedSRGAN</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <style>
+      :root {
+        --primary: #4361ee;
+        --secondary: #3f37c9;
+        --success: #4cc9f0;
+        --light: #f8f9fa;
+        --dark: #212529;
+        --accent: #4895ef;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #f5f7fa 0%, #e4e9f2 100%);
+        padding: 30px 0;
+        min-height: 100vh;
+      }
+
+      .container {
+        max-width: 850px;
+      }
+
+      .logo-container {
+        margin-bottom: 2.5rem;
+        position: relative;
+      }
+
+      .logo {
+        font-weight: 800;
+        font-size: 2.5rem;
+        background: linear-gradient(to right, var(--primary), var(--success));
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        margin-bottom: 0;
+        letter-spacing: -1px;
+      }
+
+      .subtitle {
+        color: #6c757d;
+        margin-bottom: 0.5rem;
+        font-weight: 500;
+      }
+
+      .tech-badge {
+        display: inline-block;
+        padding: 0.35rem 0.7rem;
+        font-size: 0.75rem;
+        font-weight: 600;
+        border-radius: 50px;
+        margin-right: 0.5rem;
+        margin-bottom: 0.5rem;
+        background-color: rgba(67, 97, 238, 0.15);
+        color: var(--primary);
+        border: 1px solid rgba(67, 97, 238, 0.3);
+      }
+
+      .card {
+        border: none;
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        overflow: hidden;
+        margin-bottom: 25px;
+        backdrop-filter: blur(5px);
+        background-color: rgba(255, 255, 255, 0.9);
+      }
+
+      .card-header {
+        background-color: rgba(255, 255, 255, 0.8);
+        border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        padding: 1.25rem 1.5rem;
+      }
+
+      .card-title {
+        margin-bottom: 0;
+        font-weight: 600;
+        font-size: 1.25rem;
+        color: var(--dark);
+      }
+
+      .card-body {
+        padding: 1.75rem;
+      }
+
+      .form-label {
+        font-weight: 500;
+        color: #495057;
+        margin-bottom: 0.75rem;
+      }
+
+      .form-control {
+        padding: 0.75rem 1rem;
+        border-radius: 10px;
+        border: 1px solid #e2e8f0;
+        background-color: #f8fafc;
+        transition: all 0.3s;
+      }
+
+      .form-control:focus {
+        border-color: var(--primary);
+        box-shadow: 0 0 0 0.25rem rgba(67, 97, 238, 0.15);
+      }
+
+      .preview-container {
+        background-color: #f8fafc;
+        border-radius: 10px;
+        padding: 1rem;
+        min-height: 200px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 1.5rem;
+        border: 2px dashed #e2e8f0;
+      }
+
+      .preview-image {
+        max-width: 100%;
+        max-height: 300px;
+        margin: 0 auto;
+        display: none;
+        border-radius: 8px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+      }
+
+      .preview-placeholder {
+        text-align: center;
+        color: #94a3b8;
+      }
+
+      .preview-placeholder i {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+        opacity: 0.5;
+      }
+
+      .btn-primary {
+        background: linear-gradient(to right, var(--primary), var(--accent));
+        border: none;
+        padding: 0.75rem 1.5rem;
+        font-weight: 600;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(67, 97, 238, 0.3);
+        transition: all 0.3s;
+      }
+
+      .btn-primary:hover,
+      .btn-primary:focus {
+        background: linear-gradient(to right, var(--secondary), var(--primary));
+        box-shadow: 0 6px 15px rgba(67, 97, 238, 0.4);
+        transform: translateY(-2px);
+      }
+
+      .browse-btn {
+        background-color: #f8fafc;
+        color: var(--primary);
+        border: 1px solid #e2e8f0;
+        padding: 0.75rem 1.5rem;
+        border-radius: 10px;
+        font-weight: 500;
+        transition: all 0.3s;
+        margin-bottom: 1.5rem;
+      }
+
+      .browse-btn:hover {
+        background-color: var(--primary);
+        color: white;
+        box-shadow: 0 4px 10px rgba(67, 97, 238, 0.3);
+      }
+
+      .footer {
+        color: #94a3b8;
+        font-size: 0.85rem;
+        text-align: center;
+        margin-top: 1.5rem;
+        font-weight: 500;
+      }
+
+      /* Animate upload button */
+      @keyframes pulse {
+        0% {
+          box-shadow: 0 0 0 0 rgba(67, 97, 238, 0.4);
+        }
+        70% {
+          box-shadow: 0 0 0 10px rgba(67, 97, 238, 0);
+        }
+        100% {
+          box-shadow: 0 0 0 0 rgba(67, 97, 238, 0);
+        }
+      }
+
+      .animate-pulse {
+        animation: pulse 2s infinite;
+      }
+
+      .enhancement-stats {
+        margin-top: 2rem;
+        margin-bottom: 2rem;
+      }
+
+      .stat-item {
+        display: flex;
+        align-items: center;
+        margin-bottom: 1rem;
+      }
+
+      .stat-icon {
+        font-size: 1.5rem;
+        color: var(--primary);
+        margin-right: 0.75rem;
+      }
+
+      .stat-label {
+        font-weight: 500;
+        color: #495057;
+        margin-bottom: 0.25rem;
+      }
+
+      .stat-value {
+        font-weight: 600;
+        font-size: 1.125rem;
+        color: var(--dark);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="text-center logo-container">
+        <h1 class="logo">OptimizedSRGAN</h1>
+        <p class="subtitle">Advanced Image Super Resolution</p>
+
+        <div class="d-flex justify-content-center mt-3 flex-wrap">
+          <span class="tech-badge"
+            ><i class="fas fa-brain me-1"></i> SRGAN</span
+          >
+          <span class="tech-badge"
+            ><i class="fas fa-image me-1"></i> 4x Upscaling</span
+          >
+          <span class="tech-badge"
+            ><i class="fas fa-cogs me-1"></i> GAN Architecture</span
+          >
+          <span class="tech-badge"
+            ><i class="fas fa-bolt me-1"></i> Optimized Training</span
+          >
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <h5 class="card-title">
+            <i class="fas fa-upload me-2"></i>Image Enhancement
+          </h5>
+        </div>
+        <div class="card-body">
+          {% if error %}
+          <div class="alert alert-danger" role="alert">
+            <i class="fas fa-exclamation-circle me-2"></i>{{ error }}
+          </div>
+          {% endif %}
+
+          <form action="/upscale" method="post" enctype="multipart/form-data">
+            <div class="mb-4">
+              <label for="file" class="form-label"
+                >Select an image to enhance</label
+              >
+
+              <div class="preview-container" id="drop-area">
+                <div class="preview-placeholder" id="placeholder">
+                  <i class="fas fa-cloud-upload-alt"></i>
+                  <p>Drag & drop your image here or click to browse</p>
+                </div>
+                <img id="preview" class="preview-image" src="#" alt="Preview" />
+              </div>
+
+              <div class="d-grid gap-2">
+                <label for="file" class="btn browse-btn">
+                  <i class="fas fa-folder-open me-2"></i>Browse Files
+                </label>
+                <input
+                  class="d-none"
+                  type="file"
+                  id="file"
+                  name="file"
+                  accept=".png,.jpg,.jpeg"
+                  onchange="previewImage(event)"
+                />
+              </div>
+            </div>
+
+            <div class="d-grid">
+              <button type="submit" class="btn btn-primary animate-pulse">
+                <i class="fas fa-magic me-2"></i>Enhance Resolution
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- Add this after the image containers in result.html -->
+      <div class="enhancement-stats row justify-content-center">
+        <div class="col-md-4 stat-item">
+          <div class="stat-icon"><i class="fas fa-image"></i></div>
+          <div>
+            <div class="stat-label">Original Size</div>
+            <div class="stat-value">{{ original_size }}</div>
+          </div>
+        </div>
+        <div class="col-md-4 stat-item">
+          <div class="stat-icon"><i class="fas fa-expand-arrows-alt"></i></div>
+          <div>
+            <div class="stat-label">Enhanced Size</div>
+            <div class="stat-value">{{ enhanced_size }}</div>
+          </div>
+        </div>
+        <div class="col-md-4 stat-item">
+          <div class="stat-icon"><i class="fas fa-search-plus"></i></div>
+          <div>
+            <div class="stat-label">Upscale Ratio</div>
+            <div class="stat-value">{{ upscale_ratio }}</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer">
+        <p>Final Year Project | Computer Vision & Image Processing</p>
+      </div>
+    </div>
+
+    <script>
+      function previewImage(event) {
+        var preview = document.getElementById("preview");
+        var placeholder = document.getElementById("placeholder");
+
+        preview.src = URL.createObjectURL(event.target.files[0]);
+        preview.style.display = "block";
+        placeholder.style.display = "none";
+      }
+
+      // Add drag and drop functionality
+      const dropArea = document.getElementById("drop-area");
+      const fileInput = document.getElementById("file");
+
+      ["dragenter", "dragover", "dragleave", "drop"].forEach((eventName) => {
+        dropArea.addEventListener(eventName, preventDefaults, false);
+      });
+
+      function preventDefaults(e) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+
+      ["dragenter", "dragover"].forEach((eventName) => {
+        dropArea.addEventListener(eventName, highlight, false);
+      });
+
+      ["dragleave", "drop"].forEach((eventName) => {
+        dropArea.addEventListener(eventName, unhighlight, false);
+      });
+
+      function highlight() {
+        dropArea.classList.add("bg-light");
+      }
+
+      function unhighlight() {
+        dropArea.classList.remove("bg-light");
+      }
+
+      dropArea.addEventListener("drop", handleDrop, false);
+
+      function handleDrop(e) {
+        const dt = e.dataTransfer;
+        const files = dt.files;
+
+        fileInput.files = files;
+
+        // Trigger the change event manually
+        const event = new Event("change");
+        fileInput.dispatchEvent(event);
+      }
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>
