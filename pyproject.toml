@@ -1,9 +1,19 @@
 [build-system]
-requires = ["setuptools>=65.0.0", "wheel"]
+requires = ["setuptools>=42.0.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
-[project]
+[tool.poetry]
 name = "srgan-project"
 version = "1.0.0"
 description = "SRGAN Image Enhancement Project"
-requires-python = ">=3.9,<3.10"
+
+[tool.poetry.dependencies]
+python = ">=3.9,<3.10"
+
+[tool.black]
+line-length = 88
+target-version = ['py39']
+
+[tool.isort]
+profile = "black"
+multi_line_output = 3
